@@ -1,6 +1,3 @@
-
-
-
 <script>
 import Header from './components/Header.vue'
   import Balance from './components/Balance.vue'
@@ -30,7 +27,12 @@ export default {
       return transaction.value.filter((item)=> item.value <0).reduce((acc,item)=> acc+item.value,0)
     })
     const total = ref(5000)
-    return {total , transaction,totalBalance, totalIncome,totalExpense}
+
+    const handleTransactionUpdate = (transactionData)=>{
+      transaction.value.push(transactionData)
+      console.log(transactionData)
+    }
+    return {total , transaction,totalBalance, totalIncome,totalExpense,handleTransactionUpdate}
   }
 }
 
@@ -42,6 +44,6 @@ export default {
     <Balance :total="totalBalance"/>
     <IncomeExpense :income="totalIncome" :expense="totalExpense"/>
     <TransactionList :transaction="transaction"/>
-    <AddTransaction/>
+    <AddTransaction @transactionSubmitted="handleTransactionUpdate"/>
   </div>
 </template>
